@@ -8,10 +8,12 @@
   <sprites name="sprites">
     <sprites name="Player">
       <sprite>sprites\spr_player</sprite>
+      <sprite>sprites\spr_player_scythe</sprite>
     </sprites>
     <sprite>sprites\sprite1</sprite>
     <sprite>sprites\planet</sprite>
     <sprite>sprites\spr_enemy</sprite>
+    <sprite>sprites\spr_weapon_scythe</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -19,6 +21,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\Collision.gml</script>
+    <script>scripts\Weapon_collision.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\obj_player</object>
@@ -26,6 +29,10 @@
     <object>objects\obj_planet</object>
     <object>objects\obj_enemy</object>
     <object>objects\Collision_Object</object>
+    <objects name="Weapon">
+      <object>objects\Weapon</object>
+      <object>objects\weapon_scythe</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room1</room>

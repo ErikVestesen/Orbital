@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>Collision_Object</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -29,7 +29,9 @@
 grav = 0.2;
 hsp = 0;
 vsp = 0;
-jumpspeed = 7;
+jumpspeed = 2;
+attack_range = 15;
+base_attack_range = attack_range;
 movespeed = 4;
 </string>
           </argument>
@@ -62,7 +64,6 @@ key_jump = keyboard_check_pressed(ord('W'));
 key_hit_right = keyboard_check(ord('E'));
 key_hit_left = keyboard_check(ord('Q'));
 
-
 //Horizontal Movement
 move =  key_left+key_right;
 hsp = move * movespeed;
@@ -83,24 +84,22 @@ if (place_meeting(x,y+1,obj_wall)){
 script_execute(Collision(hsp,vsp,Collision_Object));
 
 
+//Weapon
+script_execute(Weapon_collision(Weapon));
+
 //Hit
-attack_range = 5;
-if(key_hit_right) {
+hit_direction = -key_hit_left + key_hit_right;
+attack = sign(hit_direction)*attack_range;
+if(key_hit_left || key_hit_right) {
+
     //Hit animation
-    if(place_meeting(x+attack_range,y, obj_enemy)) {
-        with instance_place(x+attack_range,y, obj_enemy) {
+    image_xscale = sign(hit_direction);
+    if(place_meeting(x+attack,y, obj_enemy)) {
+        with instance_place(x+attack,y, obj_enemy) {
             instance_destroy();
         }
     }
 }
-
-if(key_hit_left) {
-    //Hit animation
-    if(place_meeting(x-attack_range,y, obj_enemy)) {
-        
-    }
-}
-
 </string>
           </argument>
         </arguments>
@@ -124,8 +123,17 @@ if(key_hit_left) {
           <argument>
             <kind>1</kind>
             <string>///Debug
-draw_text(x,y-50,vsp);
+//draw_text(x,y-50,vsp);
+draw_text(x,y-50,attack);
 
+//var r = sprite_index(spr_player).width + attack_range;
+var r = sprite_get_width(spr_player) + attack_range;
+if(place_meeting(x+attack_range,y,obj_enemy)) {
+    draw_circle(x,y,r,true)
+}
+if(place_meeting(x-attack_range,y,obj_enemy)) {
+    draw_circle(x,y,r,true)
+}
 </string>
           </argument>
         </arguments>
